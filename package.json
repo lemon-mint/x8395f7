@@ -1,0 +1,19 @@
+{
+  "name": "x8395f7",
+  "version": "1.0.0",
+  "description": "0x8395f7",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lemon-mint/x8395f7.git"
+  },
+  "author": "lemon-mint",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/lemon-mint/x8395f7/issues"
+  },
+  "homepage": "https://github.com/lemon-mint/x8395f7#readme"
+}
