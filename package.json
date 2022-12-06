@@ -2,7 +2,7 @@
   "name": "x8395f7",
   "version": "1.0.0",
   "description": "0x8395f7",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
     "build": "tsc"
   },
