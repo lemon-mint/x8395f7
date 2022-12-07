@@ -35,14 +35,6 @@ function _wymix(a: bigint, b: bigint): bigint {
 function _wyr8(p: Uint8Array, offset: number): bigint {
   return BigInt.asUintN(
     64,
-    // BigInt.asUintN(64, BigInt(p[0]!)) |
-    //   BigInt.asUintN(64, BigInt(p[1]!) << BigInt(8)) |
-    //   BigInt.asUintN(64, BigInt(p[2]!) << BigInt(16)) |
-    //   BigInt.asUintN(64, BigInt(p[3]!) << BigInt(24)) |
-    //   BigInt.asUintN(64, BigInt(p[4]!) << BigInt(32)) |
-    //   BigInt.asUintN(64, BigInt(p[5]!) << BigInt(40)) |
-    //   BigInt.asUintN(64, BigInt(p[6]!) << BigInt(48)) |
-    //   BigInt.asUintN(64, BigInt(p[7]!) << BigInt(56))
     BigInt.asUintN(64, BigInt(p[offset + 0]!)) |
       BigInt.asUintN(64, BigInt(p[offset + 1]!) << BigInt(8)) |
       BigInt.asUintN(64, BigInt(p[offset + 2]!) << BigInt(16)) |
@@ -57,10 +49,6 @@ function _wyr8(p: Uint8Array, offset: number): bigint {
 function _wyr4(p: Uint8Array, offset: number): bigint {
   return BigInt.asUintN(
     64,
-    // BigInt.asUintN(64, BigInt(p[0]!)) |
-    //   BigInt.asUintN(64, BigInt(p[1]!) << BigInt(8)) |
-    //   BigInt.asUintN(64, BigInt(p[2]!) << BigInt(16)) |
-    //   BigInt.asUintN(64, BigInt(p[3]!) << BigInt(24))
     BigInt.asUintN(64, BigInt(p[offset + 0]!)) |
       BigInt.asUintN(64, BigInt(p[offset + 1]!) << BigInt(8)) |
       BigInt.asUintN(64, BigInt(p[offset + 2]!) << BigInt(16)) |
@@ -71,9 +59,6 @@ function _wyr4(p: Uint8Array, offset: number): bigint {
 function _wyr3(p: Uint8Array, offset: number, k: number): bigint {
   return BigInt.asUintN(
     64,
-    // BigInt.asUintN(64, BigInt.asUintN(64, BigInt(p[0]!)) << BigInt(16)) |
-    //   BigInt.asUintN(64, BigInt.asUintN(64, BigInt(p[k >> 1]!)) << BigInt(8)) |
-    //   BigInt.asUintN(64, BigInt(p[k - 1]!))
     BigInt.asUintN(
       64,
       BigInt.asUintN(64, BigInt(p[offset + 0]!)) << BigInt(16)
