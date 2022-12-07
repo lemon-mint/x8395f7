@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "0x8395f7",
   "main": "src/index.js",
+  "type": "module",
   "scripts": {
     "build": "tsc"
   },
