@@ -24,6 +24,6 @@
     "typescript": "^4.9.3"
   },
   "dependencies": {
-    "wyhash": "^0.0.2"
+    "wyhash": "^0.0.3"
   }
 }
