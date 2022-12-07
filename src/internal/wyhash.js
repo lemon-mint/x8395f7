@@ -24,16 +24,7 @@ function _wymix(a, b) {
     return BigInt.asUintN(64, a ^ b);
 }
 function _wyr8(p, offset) {
-    return BigInt.asUintN(64, 
-    // BigInt.asUintN(64, BigInt(p[0]!)) |
-    //   BigInt.asUintN(64, BigInt(p[1]!) << BigInt(8)) |
-    //   BigInt.asUintN(64, BigInt(p[2]!) << BigInt(16)) |
-    //   BigInt.asUintN(64, BigInt(p[3]!) << BigInt(24)) |
-    //   BigInt.asUintN(64, BigInt(p[4]!) << BigInt(32)) |
-    //   BigInt.asUintN(64, BigInt(p[5]!) << BigInt(40)) |
-    //   BigInt.asUintN(64, BigInt(p[6]!) << BigInt(48)) |
-    //   BigInt.asUintN(64, BigInt(p[7]!) << BigInt(56))
-    BigInt.asUintN(64, BigInt(p[offset + 0])) |
+    return BigInt.asUintN(64, BigInt.asUintN(64, BigInt(p[offset + 0])) |
         BigInt.asUintN(64, BigInt(p[offset + 1]) << BigInt(8)) |
         BigInt.asUintN(64, BigInt(p[offset + 2]) << BigInt(16)) |
         BigInt.asUintN(64, BigInt(p[offset + 3]) << BigInt(24)) |
@@ -43,22 +34,13 @@ function _wyr8(p, offset) {
         BigInt.asUintN(64, BigInt(p[offset + 7]) << BigInt(56)));
 }
 function _wyr4(p, offset) {
-    return BigInt.asUintN(64, 
-    // BigInt.asUintN(64, BigInt(p[0]!)) |
-    //   BigInt.asUintN(64, BigInt(p[1]!) << BigInt(8)) |
-    //   BigInt.asUintN(64, BigInt(p[2]!) << BigInt(16)) |
-    //   BigInt.asUintN(64, BigInt(p[3]!) << BigInt(24))
-    BigInt.asUintN(64, BigInt(p[offset + 0])) |
+    return BigInt.asUintN(64, BigInt.asUintN(64, BigInt(p[offset + 0])) |
         BigInt.asUintN(64, BigInt(p[offset + 1]) << BigInt(8)) |
         BigInt.asUintN(64, BigInt(p[offset + 2]) << BigInt(16)) |
         BigInt.asUintN(64, BigInt(p[offset + 3]) << BigInt(24)));
 }
 function _wyr3(p, offset, k) {
-    return BigInt.asUintN(64, 
-    // BigInt.asUintN(64, BigInt.asUintN(64, BigInt(p[0]!)) << BigInt(16)) |
-    //   BigInt.asUintN(64, BigInt.asUintN(64, BigInt(p[k >> 1]!)) << BigInt(8)) |
-    //   BigInt.asUintN(64, BigInt(p[k - 1]!))
-    BigInt.asUintN(64, BigInt.asUintN(64, BigInt(p[offset + 0])) << BigInt(16)) |
+    return BigInt.asUintN(64, BigInt.asUintN(64, BigInt.asUintN(64, BigInt(p[offset + 0])) << BigInt(16)) |
         BigInt.asUintN(64, BigInt.asUintN(64, BigInt(p[offset + (k >> 1)])) << BigInt(8)) |
         BigInt.asUintN(64, BigInt(p[offset + k - 1])));
 }
@@ -113,3 +95,4 @@ function _wyhash(key, seed, secret) {
 export function wyhash(b, seed) {
     return _wyhash(b, seed, _wyp);
 }
+//# sourceMappingURL=wyhash.js.map

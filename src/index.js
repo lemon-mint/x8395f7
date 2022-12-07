@@ -1,4 +1,3 @@
-"use strict";
 const MAX_NODE_HEIGHT = 30;
 function rand_height() {
     return (Math.random() * MAX_NODE_HEIGHT + 1) | 0;
@@ -60,3 +59,5 @@ class SkipListNode {
         this.layers = new Array(this.height);
     }
 }
+export {};
+//# sourceMappingURL=index.js.map

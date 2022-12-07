@@ -2,8 +2,11 @@
   "name": "x8395f7",
   "version": "1.0.0",
   "description": "0x8395f7",
-  "main": "src/index.js",
+  "exports": "./src/index.js",
   "type": "module",
+  "engines": {
+    "node": ">=14.16"
+  },
   "scripts": {
     "build": "tsc"
   },
