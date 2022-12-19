@@ -102,6 +102,43 @@ export class SkipList {
     return node;
   }
 
+  public insert_from_arena(
+    key_offset: number,
+    key_size: number,
+    value_offset: number,
+    value_size: number,
+    ctx: Context,
+  ): SkipNode {
+    const x = this.search(this.arena.data(key_offset, key_size), ctx);
+    if (x) { // If key already exists, update the value
+      x.value_offset = value_offset;
+      x.value_size = value_size;
+      return x;
+    }
+
+    // If key does not exist, insert a new node
+    const level = rand_level();
+    const node = new SkipNode(
+      this.arena,
+      0, 0, 0, 0,
+      Tag.vNode,
+      level,
+    );
+
+    node.key_offset = key_offset;
+    node.key_size = key_size;
+    node.value_offset = value_offset;
+    node.value_size = value_size;
+
+    // Insert the node into the skip list
+    for (let i = 0; i < level; i++) {
+      node.next[i] = ctx.lv[i].next[i];
+      ctx.lv[i].next[i] = node;
+    }
+
+    return node;
+  }
+
   public delete(key: Uint8Array, ctx: Context): boolean {
     const x = this.search(key, ctx);
     if (!x) { // If key does not exist, return false
