@@ -134,6 +134,47 @@ export class SkipList {
   }
 }
 
+export class SkipListIterator {
+  list: SkipList;
+  ctx: Context;
+  value: SkipNode|null;
+
+  constructor(list: SkipList) {
+    this.list = list;
+    this.ctx = new Context(list.arena);
+    this.ctx.reset(list.head);
+    this.value = null;
+  }
+
+  public seek(key: Uint8Array): SkipNode|null {
+    const node = this.list.search(key, this.ctx);
+    this.value = node;
+    return node;
+  }
+
+  public rewind(): void {
+    this.ctx.reset(this.list.head);
+    this.value = null;
+  }
+
+  public next() {
+    if (!this.value) {
+      this.value = this.ctx.lv[0].next[0];
+    } else {
+      this.value = this.value.next[0];
+    }
+
+    if (this.value.isTail()) {
+      return { done: true, value: undefined };
+    }
+    return { done: false, value: this.value };
+  }
+
+  [Symbol.iterator]() {
+    return this;
+  }
+}
+
 export enum Tag {
   vHead = 0x00,
   vNode = 0x01,
