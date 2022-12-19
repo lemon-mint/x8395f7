@@ -132,6 +132,10 @@ export class SkipList {
 
     return s;
   }
+
+  public iterator(): SkipListIterator {
+    return new SkipListIterator(this);
+  }
 }
 
 export class SkipListIterator {
