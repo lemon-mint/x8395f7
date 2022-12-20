@@ -42,25 +42,32 @@ export class SkipList {
     this.comparator = comparator || compare;
     this.tail = new SkipNode(
       this.arena,
-      0, 0, 0, 0,
+      0,
+      0,
+      0,
+      0,
       Tag.vTail,
-      MAX_NODE_HEIGHT,
+      MAX_NODE_HEIGHT
     );
     this.head = new SkipNode(
       this.arena,
-      0, 0, 0, 0,
+      0,
+      0,
+      0,
+      0,
       Tag.vHead,
-      MAX_NODE_HEIGHT,
+      MAX_NODE_HEIGHT
     );
     for (let i = 0; i < MAX_NODE_HEIGHT; i++) {
       this.head.next[i] = this.tail;
     }
   }
 
-  public search(key: Uint8Array, ctx: Context): SkipNode|null {
+  public search(key: Uint8Array, ctx: Context): SkipNode | null {
     ctx.reset(this.head); // reset context
     let x = this.head; // start from head
-    for (let i = MAX_NODE_HEIGHT - 1; i >= 0; i--) { // scan from top pointer
+    for (let i = MAX_NODE_HEIGHT - 1; i >= 0; i--) {
+      // scan from top pointer
       while (!x.next[i].isTail() && this.comparator(x.next[i].key(), key) < 0) {
         x = x.next[i]; // move to next node
       }
@@ -75,19 +82,15 @@ export class SkipList {
 
   public insert(key: Uint8Array, value: Uint8Array, ctx: Context): SkipNode {
     const x = this.search(key, ctx);
-    if (x) { // If key already exists, update the value
+    if (x) {
+      // If key already exists, update the value
       x.SetValue(value);
       return x;
     }
 
     // If key does not exist, insert a new node
     const level = rand_level();
-    const node = new SkipNode(
-      this.arena,
-      0, 0, 0, 0,
-      Tag.vNode,
-      level,
-    );
+    const node = new SkipNode(this.arena, 0, 0, 0, 0, Tag.vNode, level);
 
     // Allocate memory for key and value
     node.SetKey(key);
@@ -107,10 +110,11 @@ export class SkipList {
     key_size: number,
     value_offset: number,
     value_size: number,
-    ctx: Context,
+    ctx: Context
   ): SkipNode {
     const x = this.search(this.arena.data(key_offset, key_size), ctx);
-    if (x) { // If key already exists, update the value
+    if (x) {
+      // If key already exists, update the value
       x.value_offset = value_offset;
       x.value_size = value_size;
       return x;
@@ -118,12 +122,7 @@ export class SkipList {
 
     // If key does not exist, insert a new node
     const level = rand_level();
-    const node = new SkipNode(
-      this.arena,
-      0, 0, 0, 0,
-      Tag.vNode,
-      level,
-    );
+    const node = new SkipNode(this.arena, 0, 0, 0, 0, Tag.vNode, level);
 
     node.key_offset = key_offset;
     node.key_size = key_size;
@@ -141,7 +140,8 @@ export class SkipList {
 
   public delete(key: Uint8Array, ctx: Context): boolean {
     const x = this.search(key, ctx);
-    if (!x) { // If key does not exist, return false
+    if (!x) {
+      // If key does not exist, return false
       return false;
     }
 
@@ -178,7 +178,7 @@ export class SkipList {
 export class SkipListIterator {
   list: SkipList;
   ctx: Context;
-  value: SkipNode|null;
+  value: SkipNode | null;
 
   constructor(list: SkipList) {
     this.list = list;
@@ -187,7 +187,7 @@ export class SkipListIterator {
     this.value = null;
   }
 
-  public seek(key: Uint8Array): SkipNode|null {
+  public seek(key: Uint8Array): SkipNode | null {
     const node = this.list.search(key, this.ctx);
     this.value = node;
     return node;
@@ -239,7 +239,7 @@ export class SkipNode {
     value_offset: number,
     value_size: number,
     tag: Tag,
-    height: number,
+    height: number
   ) {
     this.arena = arena;
     this.key_offset = key_offset;
