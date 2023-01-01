@@ -32,6 +32,10 @@ export class Arena {
     return this.offset;
   }
 
+  public freespace(): number {
+    return this.size - this.offset;
+  }
+
   public IncRef() {
     this.ref++;
   }
