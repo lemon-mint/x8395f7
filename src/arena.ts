@@ -28,6 +28,10 @@ export class Arena {
     this.offset = 0;
   }
 
+  public len(): number {
+    return this.offset;
+  }
+
   public IncRef() {
     this.ref++;
   }
