@@ -41,12 +41,16 @@ export class WAL {
   file?: File;
   seed: bigint;
   offset: number = 64;
+  sync: boolean = false;
 
-  constructor(fs: FSDriver, path: string, prefix: string) {
+  constructor(fs: FSDriver, path: string, prefix: string, sync?: boolean) {
     this.fs = fs;
     this.path = path;
     this.prefix = prefix;
     this.seed = BigInt(42);
+    if (sync) {
+      this.sync = true;
+    }
   }
 
   public async open() {
@@ -153,6 +157,10 @@ export class WAL {
 
     await WriteFullAt(this.file!, entry, this.offset);
     this.offset += entry.length;
+
+    if (this.sync) {
+      this.file!.sync();
+    }
   }
 
   public async close() {
