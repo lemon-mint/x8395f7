@@ -2,7 +2,7 @@ import { FSDriver } from "./fs_abst.js";
 import { FS_DRIVER_NODE } from "./fs_node.js";
 import { WAL } from "./wal.js";
 
-export class FS {
+export class MemTable {
   _driver: FSDriver;
   _wal: WAL;
   constructor(driver: FSDriver) {

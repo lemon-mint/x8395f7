@@ -46,3 +46,19 @@ export function compare_uint64(a: Uint8Array, a_offset: number, b: Uint8Array, b
   }
   return 1;
 }
+
+export function compare_key(a: Uint8Array, b: Uint8Array) {
+  // Key Format:
+  // data: len-8 bytes
+  // ts: 8 bytes
+
+  const a_data = a.subarray(0, a.length - 8);
+  const b_data = b.subarray(0, b.length - 8);
+
+  const cmp = compare(a_data, b_data);
+  if (cmp != 0) {
+    return cmp;
+  }
+
+  return compare_uint64(a, a.length - 8, b, b.length - 8);
+}
