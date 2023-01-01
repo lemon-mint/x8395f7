@@ -36,6 +36,15 @@ export class MemTable {
   }
 
   freespace(): number {
-    return this._maxsize - this._arena.len();
+    return this._arena.freespace();
+  }
+
+  async open() {
+    await this._wal.open();
+    // TODO: recover from wal
+  }
+
+  async close() {
+    await this._wal.close();
   }
 }
