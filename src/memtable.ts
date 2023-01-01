@@ -13,7 +13,6 @@ export class MemTable {
   _arena: Arena;
   _skip: SkipList;
   _maxsize: number;
-  _flush: (_mt: MemTable) => Promise<void>;
 
   constructor(
     driver: FSDriver,
@@ -21,7 +20,6 @@ export class MemTable {
     prefix: string,
     maxsize: number,
     sync: boolean,
-    flush: (_mt: MemTable) => Promise<void>
   ) {
     if (maxsize <= 0) {
       throw new Error("maxsize must be greater than 0");
@@ -35,6 +33,9 @@ export class MemTable {
     this._arena = new Arena(maxsize);
     this._skip = new SkipList(this._arena, compare_key);
     this._maxsize = maxsize;
-    this._flush = flush;
+  }
+
+  freespace(): number {
+    return this._maxsize - this._arena.len();
   }
 }
