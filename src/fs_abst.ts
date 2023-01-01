@@ -24,3 +24,37 @@ export interface FileStat {
   isDirectory(): boolean;
   size(): number;
 }
+
+export const ErrUnexpectedEOF = "Unexpected EOF"
+
+export async function ReadFull(f: File, buf: Uint8Array): Promise<void> {
+  let n = 0;
+  while (n < buf.length) {
+    const n2 = await f.read(buf.subarray(n));
+    n += n2;
+  }
+}
+
+export async function ReadFullAt(f: File, buf: Uint8Array, offset: number): Promise<void> {
+  let n = 0;
+  while (n < buf.length) {
+    const n2 = await f.pread(buf.subarray(n), offset + n);
+    n += n2;
+  }
+}
+
+export async function WriteFull(f: File, buf: Uint8Array): Promise<void> {
+  let n = 0;
+  while (n < buf.length) {
+    const n2 = await f.write(buf.subarray(n));
+    n += n2;
+  }
+}
+
+export async function WriteFullAt(f: File, buf: Uint8Array, offset: number): Promise<void> {
+  let n = 0;
+  while (n < buf.length) {
+    const n2 = await f.pwrite(buf.subarray(n), offset + n);
+    n += n2;
+  }
+}
